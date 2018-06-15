@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Recreating .ready()</title>
@@ -7,12 +8,14 @@
 		body {
 			margin: 0px;
 		}
+
 		.responsive {
 			width: 100%;
 			height: 100%;
 		}
 	</style>
 </head>
+
 <body>
 	<h1>Are you doing work when the document is ready?</h1>
 	<h3>Your wrapper should resolve before the huge image finishes loading. Turn on <a href="https://developers.google.com/web/tools/chrome-devtools/profile/network-performance/network-conditions">network throttling</a> to test.</h3>
@@ -32,10 +35,16 @@
 
 			Make sure you return the Promise!
 			 */
-			document.addEventListener('readystatechange', function() {
-				/*
-				Your code here too!
-				 */
+			return new Promise(function(resolve) {
+				document.addEventListener('readystatechange', function() {
+					/*
+					Your code here too!
+					 */
+					if (document.readyState != "loading") {
+						resolve();
+					}
+				});
+				// ready().then(wrapperResolved);
 			});
 		};
 
@@ -43,7 +52,7 @@
 		Don't forget to test your code!
 		Call wrapperResolved when the DOM is ready.
 		 */
-		// ready()
+		ready().then(wrapperResolved);
 
 		// Just here for your testing
 		function wrapperResolved() {
@@ -52,4 +61,5 @@
 		};
 	</script>
 </body>
+
 </html>
